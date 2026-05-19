@@ -25,4 +25,30 @@ document.addEventListener('DOMContentLoaded', () => {
     tickerInner.innerHTML += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + tickerInner.innerHTML;
   }
 
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const header = document.querySelector('header');
+  if (navToggle && header) {
+    navToggle.addEventListener('click', () => {
+      const open = header.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // Close menu when clicking a nav link
+    document.querySelectorAll('nav a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (header.classList.contains('nav-open')) {
+          header.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!header.contains(e.target) && header.classList.contains('nav-open')) {
+        header.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
 });

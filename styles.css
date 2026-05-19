@@ -97,6 +97,17 @@ nav {
   display: flex;
   gap: 6px;
 }
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 2px solid var(--azul);
+  color: var(--azul);
+  font-size: 1.25rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 nav a {
   text-decoration: none;
   font-size: 0.8rem;
@@ -368,10 +379,30 @@ nav a.active { background: var(--rojo); color: var(--blanco); }
   .news-grid { grid-template-columns: 1fr 1fr; }
   .card.wide { grid-column: span 2; }
   header { flex-direction: column; gap: 12px; }
+  .nav-toggle { display: inline-flex; align-items:center; justify-content:center; }
+  nav { display: none; }
+  header.nav-open nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    top: calc(100% + 8px);
+    background: var(--blanco);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    z-index: 120;
+  }
+  nav a { padding: 10px 12px; border-radius: 6px; }
+  .top-bar .ticker { display: none; }
 }
 @media (max-width: 560px) {
   .news-grid { grid-template-columns: 1fr; padding: 0 18px 36px; }
   .card.wide { grid-column: span 1; grid-template-columns: 1fr; }
   .card.wide .card-img { height: 160px; }
   .top-bar, header, .section-header { padding-left: 18px; padding-right: 18px; }
+  .logo-wrap img { height: 52px; width: 52px; }
+  .logo-text .top-name, .logo-text .bottom-name { font-size: 1.15rem; }
 }
