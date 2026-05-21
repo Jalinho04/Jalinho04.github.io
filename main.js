@@ -29,6 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Fecha: mostrar la fecha real del día en la barra superior
+  const fechaEl = document.getElementById('fecha-actual');
+  if (fechaEl) {
+    const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                   'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const hoy = new Date();
+    fechaEl.textContent =
+      `${dias[hoy.getDay()]}, ${hoy.getDate()} ${meses[hoy.getMonth()]} ${hoy.getFullYear()}`;
+  }
+
   // Ticker: duplicate content so the animation loops seamlessly
   const tickerInner = document.querySelector('.ticker-inner');
   if (tickerInner) {
