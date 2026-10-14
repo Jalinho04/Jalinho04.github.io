@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halit | Estudiante de Ingeniería en Sistemas & Ciberseguridad</title>
+  <meta name="description" content="Portafolio personal de Halit - Estudiante de primer semestre de Ingeniería en Sistemas, apasionado por la ciberseguridad, análisis de vulnerabilidades y desarrollo en Python, JavaScript y TypeScript." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              black: '#07090e',
+              dark: '#0c1017',
+              card: '#111622',
+              cardHover: '#161d2d',
+              border: '#1f293d',
+              emerald: '#10b981',
+              cyan: '#06b6d4',
+              purple: '#8b5cf6',
+              glow: '#059669',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'radar': 'radar 8s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            radar: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#07090e] text-slate-200 font-sans antialiased selection:bg-emerald-500/20 selection:text-emerald-300 relative overflow-x-hidden min-h-screen">
+
+  <!-- Interactive Canvas Background -->
+  <canvas id="bg-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Subtle Ambient Glows -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-10 right-10 w-[500px] h-[300px] bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none -z-10"></div>
+
+  <!-- HEADER / NAVBAR -->
+  <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl z-50 transition-all duration-300">
+    <div class="backdrop-blur-xl bg-[#0c1017]/80 border border-slate-800/80 rounded-2xl px-5 py-3 shadow-2xl shadow-black/50 flex items-center justify-between">
+      
+      <!-- Brand Logo / Identity -->
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <div class="relative w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:border-emerald-400/70 transition-colors shadow-inner">
+          <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
+          <span class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-mono font-bold text-sm tracking-wide text-white group-hover:text-emerald-300 transition-colors">
+            halit<span class="text-emerald-400">.sec</span>
+          </span>
+          <span class="text-[10px] text-slate-400 font-mono tracking-tight leading-none">ing-sistemas</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 font-mono text-xs text-slate-400">
+        <a href="#hero" class="px-3 py-1.5 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all">/inicio</a>
+        <a href="#projects" class="px-3 py-1.5 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all">/proyectos</a>
+        <a href="#arsenal" class="px-3 py-1.5 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all">/arsenal</a>
+        <a href="#about" class="px-3 py-1.5 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all">/sobre-mi</a>
+        <a href="#contact" class="px-3 py-1.5 rounded-lg hover:text-white hover:bg-slate-800/60 transition-all">/contacto</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <!-- Terminal Modal Button -->
+        <button id="open-terminal-btn" class="px-3 py-1.5 rounded-lg bg-slate-800/70 hover:bg-slate-800 border border-slate-700/60 text-xs font-mono text-emerald-300 hover:border-emerald-500/40 transition-all flex items-center gap-1.5 group shadow-sm" title="Abrir terminal CLI">
+          <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400 group-hover:rotate-6 transition-transform"></i>
+          <span class="hidden sm:inline">CLI</span>
+        </button>
+
+        <!-- GitHub Profile -->
+        <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white transition-all flex items-center gap-1.5">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="relative z-10 max-w-5xl mx-auto px-6 pt-32 pb-24 space-y-32">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="pt-10 md:pt-16 flex flex-col items-start gap-8">
+      
+      <!-- Security Status Badge -->
+      <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-wide">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>ESTUDIANTE DE ING. EN SISTEMAS // APASIONADO POR LA CIBERSEGURIDAD</span>
+      </div>
+
+      <!-- Main Headline with Scramble Effect -->
+      <div class="space-y-4 max-w-3xl">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
+          Construyendo y protegiendo <br class="hidden sm:inline" />
+          sistemas con <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 decode-scramble" data-original="código & curiosidad.">código & curiosidad.</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl font-light">
+          Soy <span class="text-slate-200 font-medium font-mono">Halit</span>, estudiante de <span class="text-emerald-400 font-medium">Ingeniería en Sistemas</span> cursando mi <span class="text-emerald-400 font-medium">primer semestre</span>. Me apasiona profundamente la <span class="text-white font-medium">ciberseguridad</span> y el desarrollo seguro. Aplico y fortalezco mis habilidades programando activamente en <span class="text-slate-200 font-mono text-sm bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700">Python</span>, <span class="text-slate-200 font-mono text-sm bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700">JavaScript</span> y <span class="text-slate-200 font-mono text-sm bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-700">TypeScript</span> para comprender el funcionamiento interno de las redes y proteger infraestructuras digitales.
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center gap-4 pt-2">
+        <a href="#projects" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-emerald-500/20 flex items-center gap-2 group">
+          <span>Ver Proyectos</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+        </a>
+        <button id="hero-terminal-btn" class="px-6 py-3 rounded-xl bg-[#111622] hover:bg-[#161d2d] border border-slate-700/80 text-slate-200 font-mono text-sm transition-all flex items-center gap-2 hover:border-emerald-500/50">
+          <i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i>
+          <span>Abrir Terminal CLI</span>
+        </button>
+        <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 border border-slate-800 text-slate-300 font-mono text-sm transition-all flex items-center gap-2">
+          <i data-lucide="git-branch" class="w-4 h-4 text-cyan-400"></i>
+          <span>GitHub @Jalinho04</span>
+        </a>
+      </div>
+
+      <!-- Mini Live Metric Cards / Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full pt-8 border-t border-slate-800/60">
+        <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/70 backdrop-blur-sm">
+          <div class="text-xs font-mono text-slate-400">Formación Actual</div>
+          <div class="text-base font-bold text-white mt-1">Ing. en Sistemas</div>
+          <div class="text-[11px] font-mono text-emerald-400">Primer Semestre</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/70 backdrop-blur-sm">
+          <div class="text-xs font-mono text-slate-400">Pasión Principal</div>
+          <div class="text-base font-bold text-white mt-1">Ciberseguridad</div>
+          <div class="text-[11px] font-mono text-cyan-400">Defensa & Análisis</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/70 backdrop-blur-sm">
+          <div class="text-xs font-mono text-slate-400">Tecnologías Clave</div>
+          <div class="text-base font-bold text-white mt-1 font-mono">Python / TS / JS</div>
+          <div class="text-[11px] font-mono text-slate-400">Scripting & Web</div>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-900/40 border border-slate-800/70 backdrop-blur-sm">
+          <div class="text-xs font-mono text-slate-400">Disponibilidad</div>
+          <div class="text-base font-bold text-emerald-400 mt-1 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Aprendiendo & Creando
+          </div>
+          <div class="text-[11px] font-mono text-slate-400">Proyectos Abiertos</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="space-y-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800/80 pb-6">
+        <div>
+          <div class="text-xs font-mono text-emerald-400 tracking-wider uppercase mb-1">// PROYECTOS & PRÁCTICA</div>
+          <h2 class="text-3xl font-extrabold text-white">Sistemas & Herramientas Desarrolladas</h2>
+        </div>
+        <!-- Filter Tabs -->
+        <div id="project-filters" class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-900/80 border border-slate-800 rounded-xl text-xs font-mono">
+          <button class="filter-btn active px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" data-filter="all">Todos</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" data-filter="appsec">Seguridad Web</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" data-filter="threat-intel">Monitoreo de Red</button>
+          <button class="filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition-colors" data-filter="tooling">Herramientas CLI</button>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">
+        
+        <!-- Project 1: Cerberus Threat Sentinel -->
+        <div class="project-card group relative p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 hover:border-emerald-500/40 transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between" data-category="threat-intel">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Monitoreo de Red & Telemetría
+              </span>
+              <div class="flex items-center gap-2 text-slate-500 group-hover:text-emerald-400 transition-colors">
+                <i data-lucide="activity" class="w-4 h-4"></i>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                Cerberus Threat Sentinel
+              </h3>
+              <p class="text-sm text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                Sistema automatizado para análisis de tráfico y detección de patrones de red sospechosos. Desarrollado en Python con procesamiento asíncrono para inspeccionar paquetes y clasificar eventos de riesgo.
+              </p>
+            </div>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Python</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">FastAPI</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Análisis PCAP</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Docker</span>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-6 border-t border-slate-800/70 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">v2.4.0 // Proyecto Activo</span>
+            <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 hover:text-emerald-300 transition-colors">
+              <span>Ver repositorio</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 2: AegisGate - Zero Trust WAF -->
+        <div class="project-card group relative p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 hover:border-cyan-500/40 transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between" data-category="appsec">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                Seguridad en Aplicaciones Web
+              </span>
+              <div class="flex items-center gap-2 text-slate-500 group-hover:text-cyan-400 transition-colors">
+                <i data-lucide="shield-alert" class="w-4 h-4"></i>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                AegisGate: Firewall de Aplicación Web (WAF)
+              </h3>
+              <p class="text-sm text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                Módulo de protección para servicios backend y APIs. Detecta y bloquea peticiones maliciosas (inyecciones SQL, ataques XSS y abuso de peticiones) mediante limitación de tasa y validación estricta de esquemas.
+              </p>
+            </div>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">TypeScript</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Node.js</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Redis</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">OWASP Top 10</span>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-6 border-t border-slate-800/70 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">v1.1.2 // Código Abierto</span>
+            <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors">
+              <span>Ver repositorio</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3: VoidPulse - Offensive Recon CLI -->
+        <div class="project-card group relative p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 hover:border-purple-500/40 transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between" data-category="tooling">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                Herramienta de Reconocimiento
+              </span>
+              <div class="flex items-center gap-2 text-slate-500 group-hover:text-purple-400 transition-colors">
+                <i data-lucide="terminal" class="w-4 h-4"></i>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                VoidPulse: Reconocimiento & Auditoría de Dominios
+              </h3>
+              <p class="text-sm text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                Utilidad de consola multihilo para mapear la superficie de exposición de dominios. Consulta certificados públicos de transparencia (CT logs) y resuelve registros DNS de forma simultánea con exportación de datos.
+              </p>
+            </div>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Python</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">AsyncIO</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Seguridad DNS</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">CLI Scripting</span>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-6 border-t border-slate-800/70 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">v3.0.1 // Utilidad CLI</span>
+            <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono text-purple-400 hover:text-purple-300 transition-colors">
+              <span>Ver repositorio</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 4: CipherVault - Memory-Safe Encrypted Storage -->
+        <div class="project-card group relative p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 hover:border-emerald-500/40 transition-all duration-300 shadow-xl overflow-hidden flex flex-col justify-between" data-category="appsec">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                Criptografía & Almacenamiento Seguro
+              </span>
+              <div class="flex items-center gap-2 text-slate-500 group-hover:text-emerald-400 transition-colors">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                CipherVault: Gestor de Claves con Conocimiento Cero
+              </h3>
+              <p class="text-sm text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                Almacén criptográfico local con cifrado autenticado AES-256-GCM y derivación de contraseñas maestras mediante Argon2id. Enfocado en la protección contra volcados indebidos de memoria.
+              </p>
+            </div>
+
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap gap-2 pt-2">
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">TypeScript</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Web Crypto API</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Argon2</span>
+              <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-800/70 text-slate-300 border border-slate-700/60">Buenas Prácticas</span>
+            </div>
+          </div>
+
+          <div class="pt-6 mt-6 border-t border-slate-800/70 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">v0.9.4 // En Desarrollo</span>
+            <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 hover:text-emerald-300 transition-colors">
+              <span>Ver repositorio</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ARSENAL / TECH STACK SECTION -->
+    <section id="arsenal" class="space-y-8">
+      <div class="border-b border-slate-800/80 pb-6">
+        <div class="text-xs font-mono text-emerald-400 tracking-wider uppercase mb-1">// ARSENAL TÉCNICO & HABILIDADES</div>
+        <h2 class="text-3xl font-extrabold text-white">Tecnologías & Dominios de Aprendizaje</h2>
+        <p class="text-sm text-slate-400 mt-2">Lenguajes y herramientas que estudio y aplico en mis prácticas de desarrollo y seguridad.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Category 1: Lenguajes Clave -->
+        <div class="p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 space-y-4">
+          <div class="flex items-center gap-2.5 text-emerald-400 font-mono text-sm font-semibold">
+            <i data-lucide="code-2" class="w-5 h-5"></i>
+            <span>Desarrollo & Scripting</span>
+          </div>
+          <p class="text-xs text-slate-400">Automatización de tareas, lógica de programación y scripts defensivos.</p>
+          
+          <ul class="space-y-2.5 pt-2 font-mono text-xs">
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span> Python
+              </span>
+              <span class="text-slate-500">Automatización & Redes</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-yellow-400"></span> JavaScript
+              </span>
+              <span class="text-slate-500">Lógica Web & DOM</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span> TypeScript
+              </span>
+              <span class="text-slate-500">Estructura & Tipado</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span> Bash / Shell Scripting
+              </span>
+              <span class="text-slate-500">Terminal & Linux</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Category 2: Ciberseguridad Aplicada -->
+        <div class="p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 space-y-4">
+          <div class="flex items-center gap-2.5 text-cyan-400 font-mono text-sm font-semibold">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+            <span>Seguridad Informática</span>
+          </div>
+          <p class="text-xs text-slate-400">Conceptos fundamentales de defensa, análisis y protección de datos.</p>
+          
+          <ul class="space-y-2.5 pt-2 font-mono text-xs">
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Estudio OWASP Top 10</span>
+              <span class="text-emerald-400">Seguridad Web</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Análisis de Tráfico de Red</span>
+              <span class="text-cyan-400">Paquetes TCP/IP</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Fundamentos de Pentesting</span>
+              <span class="text-purple-400">Pruebas Éticas</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Criptografía Básica</span>
+              <span class="text-emerald-400">Hashes & AES</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Category 3: Entornos & Herramientas -->
+        <div class="p-6 rounded-2xl bg-[#0e131d] border border-slate-800/90 space-y-4">
+          <div class="flex items-center gap-2.5 text-purple-400 font-mono text-sm font-semibold">
+            <i data-lucide="server" class="w-5 h-5"></i>
+            <span>Entornos & Utilidades</span>
+          </div>
+          <p class="text-xs text-slate-400">Sistemas operativos y software para análisis técnico y control de versiones.</p>
+          
+          <ul class="space-y-2.5 pt-2 font-mono text-xs">
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Sistemas Linux</span>
+              <span class="text-slate-500">Línea de Comandos</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Wireshark & Nmap</span>
+              <span class="text-slate-500">Escaneo & Red</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Git & GitHub</span>
+              <span class="text-slate-500">Control de Código</span>
+            </li>
+            <li class="flex items-center justify-between p-2 rounded-lg bg-slate-900/60 border border-slate-800">
+              <span class="text-slate-200 font-semibold">Docker Básico</span>
+              <span class="text-slate-500">Contenedores</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="space-y-8">
+      <div class="border-b border-slate-800/80 pb-6">
+        <div class="text-xs font-mono text-emerald-400 tracking-wider uppercase mb-1">// SOBRE MÍ & ENFOQUE</div>
+        <h2 class="text-3xl font-extrabold text-white">Mi Trayectoria & Pasión por la Seguridad</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        
+        <!-- Bio text -->
+        <div class="md:col-span-7 space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base font-light">
+          <p>
+            ¡Hola! Soy <strong class="text-white font-medium">Halit</strong>. Actualmente soy <strong class="text-emerald-400 font-medium">estudiante de Ingeniería en Sistemas cursando mi primer semestre</strong>. Desde el primer día de mi formación académica, tengo una meta clara: especializarme y destacar en el apasionante mundo de la <strong class="text-white font-medium">ciberseguridad</strong>.
+          </p>
+          <p>
+            Me fascina entender cómo operan las computadoras y las redes desde sus bases fundamentales: cómo viaja un paquete de datos, qué ocurre en la memoria durante la ejecución de un programa y de qué manera pequeños fallos de diseño pueden convertirse en vulnerabilidades críticas.
+          </p>
+          <p class="text-slate-400">
+            En paralelo a mis materias universitarias, dedico tiempo constante al autoaprendizaje práctico desarrollando proyectos con <strong class="text-slate-200">Python</strong>, profundizando en el ecosistema de <strong class="text-slate-200">TypeScript y JavaScript</strong>, y resolviendo laboratorios para afinar mi pensamiento analítico.
+          </p>
+
+          <div class="pt-4 flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg">
+              <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+              <span>Ing. en Sistemas (1er Semestre)</span>
+            </div>
+            <div class="flex items-center gap-2 font-mono text-xs text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-lg">
+              <i data-lucide="shield" class="w-4 h-4"></i>
+              <span>Entusiasta de la Ciberseguridad</span>
+            </div>
+            <div class="flex items-center gap-2 font-mono text-xs text-purple-400 bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 rounded-lg">
+              <i data-lucide="code" class="w-4 h-4"></i>
+              <span>Aprendizaje Constante</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terminal Box / Interactive Card -->
+        <div class="md:col-span-5 rounded-2xl bg-[#0c1017] border border-slate-800 p-5 shadow-2xl space-y-3 font-mono text-xs">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
+            <div class="flex items-center gap-1.5">
+              <div class="w-2.5 h-2.5 rounded-full bg-rose-500/80"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
+              <div class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+            </div>
+            <span class="text-slate-500 text-[11px]">halit@sistemas-node:~</span>
+          </div>
+
+          <div class="space-y-2 text-slate-300">
+            <div class="text-slate-400">$ whoami</div>
+            <div class="text-emerald-400 pl-2">halit (Estudiante Ing. en Sistemas | Entusiasta de Ciberseguridad)</div>
+
+            <div class="text-slate-400 pt-1">$ cat ~/perfil/universidad.txt</div>
+            <div class="text-slate-300 pl-2 space-y-0.5 text-[11px]">
+              <div>• Carrera: Ingeniería en Sistemas</div>
+              <div>• Semestre: 1er Semestre (Iniciando con fuerza)</div>
+              <div>• Intereses: Ciberseguridad, Redes, Arquitectura de Software</div>
+            </div>
+
+            <div class="text-slate-400 pt-1">$ cat ~/metas.sh</div>
+            <div class="text-cyan-400 pl-2 text-[11px]">
+              <div>while [ true ]; do</div>
+              <div>&nbsp;&nbsp;aprender_bases();</div>
+              <div>&nbsp;&nbsp;programar_herramientas();</div>
+              <div>&nbsp;&nbsp;auditar_sistemas();</div>
+              <div>done</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="space-y-8">
+      <div class="border-b border-slate-800/80 pb-6">
+        <div class="text-xs font-mono text-emerald-400 tracking-wider uppercase mb-1">// CANAL SEGURO</div>
+        <h2 class="text-3xl font-extrabold text-white">Iniciar Conexión</h2>
+        <p class="text-sm text-slate-400 mt-2">¿Tienes una idea, necesitas una auditoría o quieres colaborar en un proyecto de seguridad?</p>
+      </div>
+
+      <div class="p-8 rounded-3xl bg-gradient-to-b from-[#0e131d] to-[#0a0d14] border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+        
+        <div class="space-y-3 max-w-lg">
+          <h3 class="text-2xl font-bold text-white">Trabajemos juntos.</h3>
+          <p class="text-sm text-slate-400 leading-relaxed">
+            Puedes explorar mi código en GitHub, clonar mis repositorios o contactarme directamente para discutir vulnerabilidades, desarrollo o nuevas oportunidades.
+          </p>
+          <div class="pt-2 flex items-center gap-3">
+            <span class="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+              PGP Ready
+            </span>
+            <span class="text-xs font-mono text-slate-400">
+              Respuesta en menos de 24h
+            </span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-mono text-sm transition-all flex items-center justify-center gap-2 group">
+            <i data-lucide="github" class="w-4 h-4 text-white"></i>
+            <span>GitHub Profile</span>
+          </a>
+          <button id="copy-email-btn" class="px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span id="copy-email-text">Copiar Contacto</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 bg-[#07090e] py-8 relative z-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>© 2026 Halit. Todos los derechos reservados.</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="https://github.com/Jalinho04" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">github/Jalinho04</a>
+        <span>•</span>
+        <span class="text-slate-600">SHA-256 Verified</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- INTERACTIVE CLI TERMINAL MODAL -->
+  <div id="terminal-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#0a0d14] border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden font-mono flex flex-col max-h-[85vh]">
+      
+      <!-- Terminal Bar -->
+      <div class="bg-[#0f141f] px-4 py-3 border-b border-slate-800 flex items-center justify-between select-none">
+        <div class="flex items-center gap-2">
+          <button id="close-terminal-btn" class="w-3 h-3 rounded-full bg-rose-500/80 hover:bg-rose-500 transition-colors" title="Cerrar"></button>
+          <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+          <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+          <span class="text-xs text-slate-400 ml-2 font-medium">halit-terminal-v1.0 (zsh)</span>
+        </div>
+        <div class="text-[11px] text-slate-500">Escribe 'help' para ver comandos</div>
+      </div>
+
+      <!-- Terminal Output Screen -->
+      <div id="terminal-history" class="p-5 text-xs text-slate-300 space-y-2 overflow-y-auto flex-1 leading-relaxed">
+        <div class="text-emerald-400 font-bold">
+          [!] Sesión de consola interactiva iniciada para Halit Security Portfolio.
+        </div>
+        <div class="text-slate-400">
+          Escribe <span class="text-emerald-300 font-bold">help</span> para listar los comandos disponibles.
+        </div>
+      </div>
+
+      <!-- Terminal Input Line -->
+      <div class="p-3 bg-[#0c1017] border-t border-slate-800/80 flex items-center gap-2">
+        <span class="text-emerald-400 font-bold text-xs select-none">halit@sec:~$</span>
+        <input type="text" id="terminal-input" class="flex-1 bg-transparent border-none outline-none text-xs text-emerald-300 font-mono focus:ring-0 placeholder-slate-600" placeholder="Escribe un comando..." autocomplete="off" spellcheck="false" />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#111622] border border-emerald-500/50 text-white font-mono text-xs px-4 py-3 rounded-xl shadow-2xl opacity-0 translate-y-4 pointer-events-none transition-all duration-300 flex items-center gap-2.5">
+    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-message">Copiado al portapapeles</span>
+  </div>
+
+  <!-- Custom Scripts -->
+  <script src="main.js"></script>
+</body>
+</html>
